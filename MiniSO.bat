@@ -110,19 +110,30 @@ goto inicio
 cls
 echo.
 set /p elim=Ruta completa de la carpeta a eliminar (ej. C:\videos\nombre_carpeta):
-rd /s /q "%elim%"
-if %errorlevel%==0 (
-	echo Carpeta eliminada con exito.
-	echo.
-	pause
-	goto inicio
-) else (
+if not exist "%elim%" (
 	echo [ERROR] Verificar que la ruta ingresada exista y este correcta.
 	echo.
 	echo Desea intentar eliminar otra carpeta? (S/N)
-	set /p rpta=Respuesta:
-	if /i "%rpta%"==S goto eliminarCarpeta
-	if /i "%rpta%"==N goto inicio
+	set /p rpta=Respuesta: 
+	if "%rpta%"=="S" goto eliminarCarpeta
+	if "%rpta%"=="s" goto eliminarCarpeta
+	goto inicio
+) else (
+	rd /s /q "%elim%"
+	if %errorlevel%==0 (
+		echo Carpeta eliminada con exito.
+		echo.
+		pause
+		goto inicio
+	) else (
+		echo [ERROR] Verificar que la ruta ingresada exista y este correcta.
+		echo.
+		echo Desea intentar eliminar otra carpeta? (S/N) 
+		set /p rpta=Respuesta: 
+		if "%rpta%"=="S" goto eliminarCarpeta
+		if "%rpta%"=="s" goto eliminarCarpeta
+		goto inicio
+	)
 )
 
 :copiarCarpeta
@@ -166,6 +177,3 @@ echo Saliendo del programa...
 echo.
 pause
 exit
-
-
-
