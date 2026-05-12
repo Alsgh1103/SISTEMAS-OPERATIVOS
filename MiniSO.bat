@@ -96,7 +96,14 @@ cls
 echo.
 set /p nuevo=Ruta y nombre de la nueva carpeta(ej. C:\videos\nombre_carpeta):
 md "%nuevo%"
-if %errorlevel%==0 (echo Carpeta nueva creada.) else (echo Error al crear la carpeta.)
+
+if %errorlevel%==0 (
+	echo Carpeta nueva creada.
+	echo.
+	echo La carpeta se creo en: %cd%
+	echo.
+)else (
+	echo Error al crear la carpeta.)
 echo.
 pause
 goto inicio
