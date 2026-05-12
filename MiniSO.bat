@@ -92,6 +92,14 @@ goto inicio
 
 :
 
+:mover
+cls
+set /p mOrigen=Ruta del archivo: 
+set /p mDestino=Carpeta destino: 
+move "%mOrigen%" "%mDestino%"
+pause
+goto inicio
+
 :salir
 echo.
 echo Gracias por usar el menu.
