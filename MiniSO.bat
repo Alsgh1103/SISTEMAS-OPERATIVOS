@@ -5,10 +5,10 @@ echo ==========================
 echo           Menu
 echo ==========================
 echo.
-echo 1. Copiar Archivo
+echo 1. Crear Archivo
 echo 2. Eliminar Archivo
-echo 3. Renombrar Archivo
-echo 4. Crear Archivo
+echo 3. Copiar Archivo
+echo 4. Renombrar Archivo
 :: Algunas ideas: 
 ::   - Renombrar archivo 
 ::   - Crear un archivo y agregarle manualmente su contenido (copy con)
@@ -16,14 +16,18 @@ echo 4. Crear Archivo
 ::   - Crear, renombrar o eliminar carpetas
 ::   - Mover archivos (move)
 echo 0. Salir
-::Opciones restante por completar son 3
 echo.
 
 set /p opcion="Opcion: "
-if "%opcion%"=="1" goto copiar
+if "%opcion%"=="1" goto crear
 if "%opcion%"=="2" goto eliminar
-if "%opcion%"=="3" goto renombrar
-if "%opcion%"=="4" goto crear
+if "%opcion%"=="3" goto copiar
+if "%opcion%"=="4" goto renombrar
+if "%opcion%"=="5" goto mover
+if "%opcion%"=="6" goto copiarCarpeta
+if "%opcion%"=="7" goto crearCarpeta
+if "%opcion%"=="8" goto eliminarCarpeta
+if "%opcion%"=="9" goto renombrarCarpeta 
 if "%opcion%"=="0" goto salir
 
 :copiar
@@ -38,7 +42,6 @@ set /p dirDestino=Ruta destino:
 :: Se utiliza el comando copy "origen" "destino"
 copy "%dirOrigen%" "%dirDestino%"
 echo.
-
 pause
 goto inicio
 
