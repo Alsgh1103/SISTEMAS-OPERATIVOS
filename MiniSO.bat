@@ -111,18 +111,19 @@ cls
 echo.
 set /p elim=Ruta completa de la carpeta a eliminar (ej. C:\videos\nombre_carpeta):
 rd /s /q "%elim%"
-if %errorlevel%==0 (echo Carpeta eliminada con exito.) goto final
-else (echo [ERROR] Verificar que la ruta ingresada exista y este correcta.) goto comprobacion
-:comprobacion
-echo.
-echo Desea intentar eliminar otra carpeta? (S/N)
-set /p rpta=Respuesta:
-if /i "%rpta%"==S goto eliminarCarpeta
-if /i "%rpta%"==N goto final
-echo.
-:final
-pause
-goto inicio
+if %errorlevel%==0 (
+	echo Carpeta eliminada con exito.
+	echo.
+	pause
+	goto inicio
+) else (
+	echo [ERROR] Verificar que la ruta ingresada exista y este correcta.
+	echo.
+	echo Desea intentar eliminar otra carpeta? (S/N)
+	set /p rpta=Respuesta:
+	if /i "%rpta%"==S goto eliminarCarpeta
+	if /i "%rpta%"==N goto inicio
+)
 
 :copiarCarpeta
 cls
@@ -133,12 +134,29 @@ set /p dirOrigen=Ruta origen:
 echo.
 set /p dirDestino=Ruta destino:
 xcopy "%dirOrigen%" "%dirDestino%" /E /I
+if %errorlevel%==0 (
+	echo Carpeta copiada con exito.
+) else (
+	echo [ERROR] Verificar que las rutas ingresadas existan y esten correctas.
+)
 echo.
-echo Carpeta copiada con exito.
 pause
 goto inicio
 
-
+:renombrarCarpeta
+cls
+echo.
+set /p cAntigua=Ruta actual de la carpeta:
+set /p cNueva=Nuevo nombre:
+ren "%cAntigua%" "%cNueva%"
+if %errorlevel%==0 (
+	echo Carpeta renombrada con exito.
+) else (
+	echo [ERROR] Verificar que la ruta ingresada exista y este correcta.
+)
+echo.
+pause
+goto inicio
 
 
 :salir
