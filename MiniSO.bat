@@ -5,8 +5,13 @@ echo ==========================
 echo           Menu
 echo ==========================
 echo.
-echo 1. Copiar Archivo
+echo 1. Crear Archivo
 echo 2. Eliminar Archivo
+echo 3. Copiar Archivo
+echo 4. Renombrar Archivo
+echo 5. Mover carpeta
+echo 6. Copiar Carpeta
+echo 7. Crear Carpeta
 :: Algunas ideas: 
 ::   - Renombrar archivo 
 ::   - Crear un archivo y agregarle manualmente su contenido (copy con)
@@ -14,12 +19,18 @@ echo 2. Eliminar Archivo
 ::   - Crear, renombrar o eliminar carpetas
 ::   - Mover archivos (move)
 echo 0. Salir
-::Opciones restante por completar son 3
 echo.
 
 set /p opcion="Opcion: "
-if "%opcion%"=="1" goto copiar
+if "%opcion%"=="1" goto crear
 if "%opcion%"=="2" goto eliminar
+if "%opcion%"=="3" goto copiar
+if "%opcion%"=="4" goto renombrar
+if "%opcion%"=="5" goto mover
+if "%opcion%"=="6" goto copiarCarpeta
+if "%opcion%"=="7" goto crearCarpeta
+if "%opcion%"=="8" goto eliminarCarpeta
+if "%opcion%"=="9" goto renombrarCarpeta 
 if "%opcion%"=="0" goto salir
 
 :copiar
@@ -34,7 +45,6 @@ set /p dirDestino=Ruta destino:
 :: Se utiliza el comando copy "origen" "destino"
 copy "%dirOrigen%" "%dirDestino%"
 echo.
-
 pause
 goto inicio
 
@@ -50,13 +60,44 @@ echo.
 
 if %errorlevel%==0 (
 	:: Caso exitoso
-    echo Archivo eliminado con exito. 
+    echo Archivo eliminado con exito.
 ) else (
 	:: Caso error
     echo [ERROR] Verificar que la ruta ingresada exista y este correcta.
 )
 echo.
 
+pause
+goto inicio
+
+:renombrar
+cls
+set /p rAntiguo=Ruta completa actual:
+set /p rNuevo=Nuevo nombre:
+ren "%rAntiguo%" "%rNuevo%"
+if %errorlevel%==0 (echo Renombrado con exito.) else (echo Error al renombrar.)
+pause
+goto inicio
+
+:crear
+cls
+echo.
+set /p nArchivo=Nombre del nuevo archivo (ej. notas.txt): 
+echo Escribe tu contenido abajo. Al terminar presiona CTRL+Z y luego ENTER.
+echo.
+copy con "%nArchivo%"
+echo.
+echo Archivo guardado.
+pause
+goto inicio
+
+:crearCarpeta
+cls
+echo.
+set /p nuevo=Ruta y nombre de la nueva carpeta(ej. C:\videos\nombre_carpeta):
+md "%nuevo%"
+if %errorlevel%==0 (echo Carpeta nueva creada.) else (echo Error al crear la carpeta.)
+echo.
 pause
 goto inicio
 
@@ -67,3 +108,6 @@ echo Saliendo del programa...
 echo.
 pause
 exit
+
+
+
