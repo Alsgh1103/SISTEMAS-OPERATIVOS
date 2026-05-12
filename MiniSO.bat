@@ -9,6 +9,9 @@ echo 1. Crear Archivo
 echo 2. Eliminar Archivo
 echo 3. Copiar Archivo
 echo 4. Renombrar Archivo
+echo 5. Mover carpeta
+echo 6. Copiar Carpeta
+echo 7. Crear Carpeta
 :: Algunas ideas: 
 ::   - Renombrar archivo 
 ::   - Crear un archivo y agregarle manualmente su contenido (copy con)
@@ -88,6 +91,16 @@ echo Archivo guardado.
 pause
 goto inicio
 
+:crearCarpeta
+cls
+echo.
+set /p nuevo=Ruta y nombre de la nueva carpeta(ej. C:\videos\nombre_carpeta):
+md "%nuevo%"
+if %errorlevel%==0 (echo Carpeta nueva creada.) else (echo Error al crear la carpeta.)
+echo.
+pause
+goto inicio
+
 :salir
 echo.
 echo Gracias por usar el menu.
@@ -95,3 +108,6 @@ echo Saliendo del programa...
 echo.
 pause
 exit
+
+
+
