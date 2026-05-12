@@ -24,9 +24,9 @@ if "%opcion%"=="2" goto eliminar
 if "%opcion%"=="3" goto copiar
 if "%opcion%"=="4" goto renombrar
 if "%opcion%"=="5" goto mover
-if "%opcion%"=="6" goto copiarCarpeta
-if "%opcion%"=="7" goto crearCarpeta
-if "%opcion%"=="8" goto eliminarCarpeta
+if "%opcion%"=="6" goto crearCarpeta
+if "%opcion%"=="7" goto eliminarCarpeta
+if "%opcion%"=="8" goto copiarCarpeta
 if "%opcion%"=="9" goto renombrarCarpeta 
 if "%opcion%"=="0" goto salir
 
@@ -79,8 +79,6 @@ echo.
 pause
 goto inicio
 
-
-
 :renombrar
 cls
 set /p rAntiguo=Ruta completa actual:
@@ -90,14 +88,26 @@ if %errorlevel%==0 (echo Renombrado con exito.) else (echo Error al renombrar.)
 pause
 goto inicio
 
-:
-
 :mover
 cls
 set /p mOrigen=Ruta del archivo: 
 set /p mDestino=Carpeta destino: 
 move "%mOrigen%" "%mDestino%"
 pause
+goto inicio
+
+
+:copiarCarpeta
+cls
+echo.
+echo Indicar la ruta completa de las carpetas (ej. C:\fotos\claseSO)
+echo.
+set /p dirOrigen=Ruta origen:
+echo.
+set /p dirDestino=Ruta destino:
+xcopy "%dirOrigen%" "%dirDestino%" /E /I
+echo.
+echo Carpeta copiada con exito.
 goto inicio
 
 :salir
