@@ -10,9 +10,9 @@ echo 2. Eliminar Archivo
 echo 3. Copiar Archivo
 echo 4. Renombrar Archivo
 echo 5. Mover Archivo
-echo 6. Copiar Carpeta
-echo 7. Crear Carpeta
-echo 8. Eliminar Carpeta
+echo 6. Crear Carpeta
+echo 7. Eliminar Carpeta
+echo 8. Copiar Carpeta
 echo 9. Renombrar Carpeta
 echo 0. Salir
 echo.
@@ -96,6 +96,16 @@ pause
 goto inicio
 
 
+:crearCarpeta
+cls
+echo.
+set /p nuevo=Ruta y nombre de la nueva carpeta(ej. C:\videos\nombre_carpeta):
+md "%nuevo%"
+if %errorlevel%==0 (echo Carpeta nueva creada.) else (echo Error al crear la carpeta.)
+echo.
+pause
+goto inicio
+
 :copiarCarpeta
 cls
 echo.
@@ -110,15 +120,7 @@ echo Carpeta copiada con exito.
 pause
 goto inicio
 
-:crearCarpeta
-cls
-echo.
-set /p nuevo=Ruta y nombre de la nueva carpeta(ej. C:\videos\nombre_carpeta):
-md "%nuevo%"
-if %errorlevel%==0 (echo Carpeta nueva creada.) else (echo Error al crear la carpeta.)
-echo.
-pause
-goto inicio
+
 
 :salir
 echo.
