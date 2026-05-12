@@ -9,12 +9,12 @@ echo 1. Crear Archivo
 echo 2. Eliminar Archivo
 echo 3. Copiar Archivo
 echo 4. Renombrar Archivo
-:: Algunas ideas: 
-::   - Renombrar archivo 
-::   - Crear un archivo y agregarle manualmente su contenido (copy con)
-::   - Copiar todos los archivos de una carpeta a otra (xcopy)
-::   - Crear, renombrar o eliminar carpetas
-::   - Mover archivos (move)
+echo 5. Mover Archivo
+echo 6. Copiar Carpeta
+::aqui nos quedamos
+echo 7. Crear Carpeta
+echo 8. Eliminar Carpeta
+echo 9. Renombrar Carpeta
 echo 0. Salir
 echo.
 
@@ -30,18 +30,15 @@ if "%opcion%"=="8" goto eliminarCarpeta
 if "%opcion%"=="9" goto renombrarCarpeta 
 if "%opcion%"=="0" goto salir
 
-:copiar
+:crear
 cls
 echo.
-echo Indicar la ruta completa de los archivos (ej. C:\fotos\claseSO.jpg)
+set /p nArchivo=Nombre del nuevo archivo (ej. notas.txt): 
+echo Escribe tu contenido abajo. Al terminar presiona CTRL+Z y luego ENTER.
 echo.
-set /p dirOrigen=Ruta origen: 
+copy con "%nArchivo%"
 echo.
-set /p dirDestino=Ruta destino: 
-
-:: Se utiliza el comando copy "origen" "destino"
-copy "%dirOrigen%" "%dirDestino%"
-echo.
+echo Archivo guardado.
 pause
 goto inicio
 
@@ -67,6 +64,23 @@ echo.
 pause
 goto inicio
 
+:copiar
+cls
+echo.
+echo Indicar la ruta completa de los archivos (ej. C:\fotos\claseSO.jpg)
+echo.
+set /p dirOrigen=Ruta origen: 
+echo.
+set /p dirDestino=Ruta destino: 
+
+:: Se utiliza el comando copy "origen" "destino"
+copy "%dirOrigen%" "%dirDestino%"
+echo.
+pause
+goto inicio
+
+
+
 :renombrar
 cls
 set /p rAntiguo=Ruta completa actual:
@@ -76,17 +90,7 @@ if %errorlevel%==0 (echo Renombrado con exito.) else (echo Error al renombrar.)
 pause
 goto inicio
 
-:crear
-cls
-echo.
-set /p nArchivo=Nombre del nuevo archivo (ej. notas.txt): 
-echo Escribe tu contenido abajo. Al terminar presiona CTRL+Z y luego ENTER.
-echo.
-copy con "%nArchivo%"
-echo.
-echo Archivo guardado.
-pause
-goto inicio
+:
 
 :salir
 echo.
