@@ -9,6 +9,7 @@ echo 1. Copiar Archivo
 echo 2. Eliminar Archivo
 echo 3. Renombrar Archivo
 echo 4. Crear Archivo
+echo 5. Mover Archivo
 :: Algunas ideas: 
 ::   - Renombrar archivo 
 ::   - Crear un archivo y agregarle manualmente su contenido (copy con)
@@ -24,6 +25,7 @@ if "%opcion%"=="1" goto copiar
 if "%opcion%"=="2" goto eliminar
 if "%opcion%"=="3" goto renombrar
 if "%opcion%"=="4" goto crear
+if "%opcion%"=="5" goto mover
 if "%opcion%"=="0" goto salir
 
 :copiar
@@ -82,6 +84,14 @@ echo.
 copy con "%nArchivo%"
 echo.
 echo Archivo guardado.
+pause
+goto inicio
+
+:mover
+cls
+set /p mOrigen=Ruta del archivo: 
+set /p mDestino=Carpeta destino: 
+move "%mOrigen%" "%mDestino%"
 pause
 goto inicio
 
