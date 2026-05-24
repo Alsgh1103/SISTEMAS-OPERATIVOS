@@ -1,3 +1,7 @@
+::Gonzales Hernandez Alexis Orlando  - 24200201
+::Porlles Chavez Danilo Ilich        - 24200202
+::Villavicencio Merella Paolo Alonso - 24200210
+
 @echo off 
 :inicio 
 cls
@@ -57,14 +61,9 @@ set /p elim=Ruta completa del archivo a eliminar (ej. C:\fotos\claseSO.jpg)
 
 del "%elim%"
 echo.
-
-:: Condicional en caso las rutas indicadas no existan o esten mal escritas
-
 if %errorlevel%==0 (
-	:: Caso exitoso
     echo Archivo eliminado con exito.
 ) else (
-	:: Caso error
     echo [ERROR] Verificar que la ruta ingresada exista y este correcta.
 )
 echo.
@@ -80,8 +79,6 @@ echo.
 set /p dirOrigen=Ruta origen: 
 echo.
 set /p dirDestino=Ruta destino: 
-
-:: Se utiliza el comando copy "origen" "destino"
 copy "%dirOrigen%" "%dirDestino%"
 echo.
 if %errorlevel%==0 (
@@ -137,31 +134,51 @@ goto inicio
 :eliminarCarpeta
 cls
 echo.
-set /p elim=Ruta completa de la carpeta a eliminar (ej. C:\videos\nombre_carpeta):
+set /p elim="Ingrese la ruta de la carpeta a eliminar (ej. C:\videos\carpeta): "
+echo.
 if not exist "%elim%" (
-	echo [ERROR] Verificar que la ruta ingresada exista y este correcta.
 	echo.
-	echo Desea intentar eliminar otra carpeta? (S/N)
-	set /p rpta=Respuesta: 
-	if "%rpta%"=="S" goto eliminarCarpeta
-	if "%rpta%"=="s" goto eliminarCarpeta
+	echo [ERROR] La carpeta no existe.
+	echo Ruta ingresada: %elim%
+	echo.
+	pause
+	goto eliminarCarpeta
+)
+echo La carpeta sera eliminada COMPLETAMENTE con TODO su contenido.
+echo Ruta: %elim%
+echo.
+echo Esta totalmente seguro que desea eliminar esta carpeta?
+set /p confirmar="Escriba 'SI' para confirmar (cualquier otra cosa cancela): "
+echo.
+if "%confirmar%"=="SI" (
+	goto confirmarEliminar
+) else (
+	echo Operacion cancelada.
+	echo.
+	pause
+	goto inicio
+)
+
+:confirmarEliminar
+echo Eliminando carpeta, por favor espere...
+echo.
+powershell -Command "Remove-Item -Path '%elim%' -Recurse -Force -ErrorAction SilentlyContinue"
+timeout /t 1 /nobreak >nul
+echo.
+if not exist "%elim%" (
+	echo [EXITO] Carpeta eliminada correctamente.
+	echo.
+	pause
 	goto inicio
 ) else (
-	rd /s /q "%elim%"
-	if %errorlevel%==0 (
-		echo Carpeta eliminada con exito.
-		echo.
-		pause
-		goto inicio
-	) else (
-		echo [ERROR] Verificar que la ruta ingresada exista y este correcta.
-		echo.
-		echo Desea intentar eliminar otra carpeta? (S/N) 
-		set /p rpta=Respuesta: 
-		if "%rpta%"=="S" goto eliminarCarpeta
-		if "%rpta%"=="s" goto eliminarCarpeta
-		goto inicio
-	)
+	echo [ERROR] No se pudo eliminar la carpeta.
+	echo Posibles causas:
+	echo - Carpeta abierta en el Explorador de Archivos
+	echo - Archivos en uso dentro de la carpeta
+	echo - Permisos insuficientes
+	echo.
+	pause
+	goto inicio
 )
 
 :copiarCarpeta
