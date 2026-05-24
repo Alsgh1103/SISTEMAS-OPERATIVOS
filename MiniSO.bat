@@ -28,6 +28,9 @@ if "%opcion%"=="7" goto eliminarCarpeta
 if "%opcion%"=="8" goto copiarCarpeta
 if "%opcion%"=="9" goto renombrarCarpeta 
 if "%opcion%"=="0" goto salir
+echo [ERROR] Opcion no valida. Intente de nuevo.
+pause
+goto inicio
 
 :crear
 cls
@@ -36,8 +39,14 @@ set /p nArchivo=Nombre del nuevo archivo (ej. notas.txt):
 echo Escribe tu contenido abajo. Al terminar presiona CTRL+Z y luego ENTER.
 echo.
 copy con "%nArchivo%"
+if %errorlevel%==0 (
+	echo.
+	echo Archivo guardado con exito.
+) else (
+	echo.
+	echo [ERROR] No se pudo crear el archivo.
+)
 echo.
-echo Archivo guardado.
 pause
 goto inicio
 
@@ -75,6 +84,12 @@ set /p dirDestino=Ruta destino:
 :: Se utiliza el comando copy "origen" "destino"
 copy "%dirOrigen%" "%dirDestino%"
 echo.
+if %errorlevel%==0 (
+	echo Archivo copiado con exito.
+) else (
+	echo [ERROR] Verificar que las rutas ingresadas existan y esten correctas.
+)
+echo.
 pause
 goto inicio
 
@@ -92,6 +107,12 @@ cls
 set /p mOrigen=Ruta del archivo: 
 set /p mDestino=Carpeta destino: 
 move "%mOrigen%" "%mDestino%"
+if %errorlevel%==0 (
+	echo Archivo movido con exito.
+) else (
+	echo [ERROR] Verificar que las rutas ingresadas existan y esten correctas.
+)
+echo.
 pause
 goto inicio
 
@@ -102,12 +123,13 @@ set /p nuevo=Ruta y nombre de la nueva carpeta(ej. C:\videos\nombre_carpeta):
 md "%nuevo%"
 
 if %errorlevel%==0 (
-	echo Carpeta nueva creada.
+	echo Carpeta nueva creada con exito.
 	echo.
-	echo La carpeta se creo en: %cd%
+	echo La carpeta se creo en: %nuevo%
 	echo.
-)else (
-	echo Error al crear la carpeta.)
+) else (
+	echo [ERROR] No se pudo crear la carpeta.
+)
 echo.
 pause
 goto inicio
@@ -148,6 +170,12 @@ echo.
 echo Indicar la ruta completa de las carpetas (ej. C:\fotos\claseSO)
 echo.
 set /p dirOrigen=Ruta origen:
+if not exist "%dirOrigen%" (
+	echo [ERROR] La carpeta origen no existe.
+	echo.
+	pause
+	goto inicio
+)
 echo.
 set /p dirDestino=Ruta destino:
 xcopy "%dirOrigen%" "%dirDestino%" /E /I
